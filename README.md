@@ -40,15 +40,20 @@ Este projeto é uma aplicação interativa baseada em **Streamlit** que utiliza 
 
 ## ⚙️ Estrutura do Projeto
 traffic_tracker/
+
+```
+traffic_tracker/
 ├── utils/
-│ ├── helper.py # Funções auxiliares como envio de email
-│ ├── constants.py # Constantes globais (limites, caminhos)
-├── functions.py # Funções gerais (ex: log de infrações)
-├── trasformerPoints.py # Homografia para transformação de perspectiva
-├── mqtt_publisher.py # Publicação via MQTT
-├── variables.py # Parâmetros ajustáveis do sistema
-├── main.py # Script principal (esse código)
-├── README.md # Este arquivo
+│   ├── helper.py            # Funções auxiliares (ex: envio de email)
+│   ├── constants.py         # Constantes globais (limites, caminhos)
+├── functions.py             # Funções gerais (ex: log de infrações)
+├── transformerPoints.py     # Homografia para transformação de perspectiva
+├── mqtt_publisher.py        # Publicação via MQTT
+├── variables.py             # Parâmetros ajustáveis do sistema
+├── main.py                  # Script principal
+├── README.md                # Documentação do projeto
+
+```
 
 
 ## 🎯 Como Funciona
