@@ -36,10 +36,10 @@ def log_infraction(details: str, log_file="logs.txt"):
 
 
 def genai_ocr(img_path):
-    genai.configure(api_key='AIzaSyCiliItuXQiX54X8rAlAH4rtvkUfmYgFo4') 
+    genai.configure(api_key='<API_KEY_MODEL_GEMINI>') 
 
     # Example usage with the image file
-    model = "gemini-1.5-flash"
+    model = "gemini-2.0-flash"
     contents = [{'parts': [{'image': {'image_url': ''}}, {'text': "Voce e um radar que detecta placas de veiculos e analisa o contexto da cena. Retorne diretamente os caracteres das placas observadas, seguidos por uma explicacao do que esta acontecendo, incluindo colisoes, presenca de pessoas ou detalhes sobre o ambiente. Nao inclua caracteres especiais na resposta, apenas texto limpo. Mantenha a resposta breve e natural, sem introducoes."}]}]
 
     # Load the image
