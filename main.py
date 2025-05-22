@@ -8,15 +8,9 @@ from tqdm import tqdm
 import math
 import time
 import matplotlib.pyplot as plt
-from utils.helper import send_email
-from utils.constants import *
 from deepsparse import Pipeline
 from deepsparse.yolo.schemas import YOLOInput
 import os
-from doctr.io import DocumentFile
-from doctr.models import ocr_predictor
-from inference_sdk import InferenceHTTPClient
-from utils.constants import (SENDER_ADDRESS, PORT, SMTP_SERVER_ADDRESS, SENDER_PASSWORD)
 from variables import *
 import pandas as pd
 from trasformerPoints import ViewTransformer
