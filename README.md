@@ -1,122 +1,120 @@
-# 🚦 Traffic Tracker - Sistema de Monitoramento e Detecção de Infrações de Trânsito
+# 🚦 Traffic Tracker - Traffic Violation Detection and Monitoring System
 
-Este projeto é uma aplicação interativa baseada em **Streamlit** que utiliza modelos de visão computacional (YOLOv8) para **detecção, rastreamento de veículos**, **análise de velocidade**, **distância entre veículos**, e **detecção de infrações de trânsito**, como **excesso de velocidade** e **risco de colisão**. O sistema também é capaz de extrair placas de veículos usando OCR e enviar dados para servidores via **MQTT**.
-
----
-
-## 📌 Funcionalidades
-
-- **Upload de modelos YOLOv8** (`.pt`, `.tflite`, `.onnx`)
-- **Entrada de vídeo personalizada:** vídeo de exemplo, webcam ou vídeo enviado
-- **Rastreamento de veículos com ByteTrack**
-- **Cálculo da velocidade em km/h com Exponential Moving Average (EMA)**
-- **Detecção de infrações de trânsito:**
-  - Velocidade acima do limite
-  - Risco de colisão (veículos muito próximos)
-- **Extração automática da placa do veículo e contexto multimodal (Gemini)**
-- **Visualização em tempo real dos dados:**
-  - Contagem de veículos
-  - Velocidade média
-  - Número de infrações
-  - Distância entre veículos
-- **Publicação dos dados via MQTT**
+This project is an interactive application built with **Streamlit** that uses computer vision models (YOLOv8) for **vehicle detection and tracking**, **speed analysis**, **distance calculation**, and **traffic violation detection**, such as **speeding** and **collision risk**. The system can also extract license plates using OCR and send data to servers via **MQTT**.
 
 ---
 
-## 🧠 Tecnologias e Bibliotecas Utilizadas
+## 📌 Features
 
-| Categoria                  | Tecnologias/Bibliotecas                            |
-|---------------------------|----------------------------------------------------|
-| **Framework UI**          | [Streamlit](https://streamlit.io/)                |
-| **Detecção de Objetos**   | [YOLOv8 - Ultralytics](https://github.com/ultralytics/ultralytics) |
-| **Rastreamento**          | [ByteTrack](https://github.com/ifzhang/ByteTrack) |
-| **Transformações Geométricas** | `ViewTransformer` via homografia              |
-| **Análise de Velocidade** | EMA (Exponential Moving Average)                  |
-| **OCR (Placa do veículo)**| [Gemini]([https://github.com/mindee/doctr](https://aistudio.google.com/))          |
-| **Publicação de dados**   | MQTT Publisher                                     |
-| **Visualização**          | `matplotlib`, `pandas`, `streamlit charts`        |
+- **Upload YOLOv8 models** (`.pt`, `.tflite`, `.onnx`)
+- **Custom video input:** sample video, webcam, or uploaded file
+- **Vehicle tracking with ByteTrack**
+- **Speed calculation in km/h using Exponential Moving Average (EMA)**
+- **Traffic violation detection:**
+  - Speeding
+  - Collision risk (vehicles too close)
+- **Automatic license plate extraction and multimodal context (Gemini)**
+- **Real-time data visualization:**
+  - Vehicle count
+  - Average speed
+  - Number of violations
+  - Distance between vehicles
+- **Data publishing via MQTT**
 
 ---
 
-## ⚙️ Estrutura do Projeto
-traffic_tracker/
+## 🧠 Technologies and Libraries Used
+
+| Category                   | Technologies/Libraries                             |
+|---------------------------|-----------------------------------------------------|
+| **UI Framework**          | [Streamlit](https://streamlit.io/)                 |
+| **Object Detection**      | [YOLOv8 - Ultralytics](https://github.com/ultralytics/ultralytics) |
+| **Tracking**              | [ByteTrack](https://github.com/ifzhang/ByteTrack)  |
+| **Geometric Transformations** | `ViewTransformer` using homography           |
+| **Speed Analysis**        | EMA (Exponential Moving Average)                   |
+| **OCR (License Plate)**   | [Gemini](https://aistudio.google.com/)             |
+| **Data Publishing**       | MQTT Publisher                                     |
+| **Visualization**         | `matplotlib`, `pandas`, `streamlit charts`         |
+
+---
+
+## ⚙️ Project Structure
 
 ```
 traffic_tracker/
 ├── utils/
-│   ├── helper.py            # Funções auxiliares (ex: envio de email)
-│   ├── constants.py         # Constantes globais (limites, caminhos)
-├── functions.py             # Funções gerais (ex: log de infrações)
-├── transformerPoints.py     # Homografia para transformação de perspectiva
-├── mqtt_publisher.py        # Publicação via MQTT
-├── variables.py             # Parâmetros ajustáveis do sistema
-├── main.py                  # Script principal
-├── README.md                # Documentação do projeto
-
+│   ├── helper.py            # Helper functions (e.g., email sending)
+│   ├── constants.py         # Global constants (limits, paths)
+├── functions.py             # General functions (e.g., violation log)
+├── transformerPoints.py     # Perspective transformation using homography
+├── mqtt_publisher.py        # MQTT data publishing
+├── variables.py             # Adjustable system parameters
+├── main.py                  # Main script
+├── README.md                # Project documentation
 ```
 
+---
 
-## 🎯 Como Funciona
+## 🎯 How It Works
 
-### 1. Detecção e Rastreamento
-- O sistema detecta veículos usando o YOLOv8.
-- Cada veículo é rastreado com um ID único pelo **ByteTrack**.
+### 1. Detection and Tracking
+- The system detects vehicles using YOLOv8.
+- Each vehicle is tracked with a unique ID via **ByteTrack**.
 
-### 2. Análise de Velocidade e Distância
-- A velocidade é calculada com base na variação de posição no plano transformado (homografia).
-- A **EMA** suaviza a variação para maior estabilidade.
-- A distância entre veículos é analisada para prever riscos.
+### 2. Speed and Distance Analysis
+- Speed is calculated based on position changes in the transformed plane (homography).
+- **EMA** smooths fluctuations for more stable output.
+- The distance between vehicles is analyzed to predict risks.
 
-### 3. Detecção de Infrações
-- **Excesso de velocidade:** se a velocidade ultrapassa `SPEED_THRESHOLD`.
-- **Risco de colisão:** se a distância entre veículos em movimento for inferior ao mínimo seguro.
-- Quando uma infração é detectada:
-  - Captura e salva imagem do veículo
-  - Extrai a placa usando Gemini
-  - Gera relatório de infração
-  - Publica via MQTT para servidor externo
+### 3. Violation Detection
+- **Speeding:** if the speed exceeds `SPEED_THRESHOLD`.
+- **Collision risk:** if the distance between moving vehicles is less than the safe minimum.
+- When a violation is detected:
+  - Captures and saves an image of the vehicle
+  - Extracts the license plate using Gemini
+  - Generates a violation report
+  - Publishes it via MQTT to an external server
 
 ---
 
 ## 📊 Interface
 
-- Visualização em tempo real do vídeo com anotações:
-  - ID do veículo
-  - Velocidade (km/h)
-  - Distância crítica (se aplicável)
-- Quatro gráficos dinâmicos:
-  - **Contagem de veículos**
-  - **Velocidade média**
-  - **Número de infrações**
-  - **Distância média entre veículos**
+- Real-time video visualization with annotations:
+  - Vehicle ID
+  - Speed (km/h)
+  - Critical distance (if applicable)
+- Four dynamic charts:
+  - **Vehicle count**
+  - **Average speed**
+  - **Number of violations**
+  - **Average vehicle distance**
 
 ---
 
-## 🚀 Como Usar
+## 🚀 How to Use
 
-1. Clone o repositório:
+1. Clone the repository:
    ```bash
-   git clone https://github.com/seu-usuario/traffic-tracker.git
+   git clone https://github.com/your-username/traffic-tracker.git
    cd traffic-tracker
    ```
 
-2. Instale as dependências:
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-  ```bash
-  pip install -r requirements.txt
-  ```
+3. Run the application:
+   ```bash
+   streamlit run main.py
+   ```
 
-3. Execute a aplicação:
-```bash
-  streamlit run main.py
-```
-
-🛠 Requisitos
+🛠 Requirements:
 Python 3.8+
 
-Bibliotecas: streamlit, opencv, numpy, ultralytics, doctr, paho-mqtt, etc.
+Libraries: streamlit, opencv, numpy, ultralytics, doctr, paho-mqtt, etc.
 
-📩 Contato
-Se tiver dúvidas, sugestões ou quiser contribuir, entre em contato:
+📩 Contact:
+For questions, suggestions, or contributions, feel free to contact:
 
 📧 Email: hyago.silva@mtel.inatel.br
