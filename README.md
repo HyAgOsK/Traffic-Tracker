@@ -120,18 +120,20 @@ activate the environment
   conda activate venv
   ```
 
-2. Install dependencies:
+**Observation**: *When you create a virtual environment, make sure to check the libraries and dependencies, as they may have been updated and might need to be upgraded.*
+
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Run the application:
+4. Run the application:
    ```bash
    streamlit run main.py
    ```
 
 🛠 Requirements:
-Python 3.8+
+Python 3.9+
 
 Libraries: streamlit, opencv, numpy, ultralytics, doctr, paho-mqtt, etc.
 
