@@ -42,9 +42,6 @@ This project is an interactive application built with **Streamlit** that uses co
 
 ```
 traffic_tracker/
-├── utils/
-│   ├── helper.py            # Helper functions (e.g., email sending)
-│   ├── constants.py         # Global constants (limits, paths)
 ├── functions.py             # General functions (e.g., violation log)
 ├── transformerPoints.py     # Perspective transformation using homography
 ├── mqtt_publisher.py        # MQTT data publishing
