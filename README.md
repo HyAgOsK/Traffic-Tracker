@@ -98,6 +98,27 @@ traffic_tracker/
    git clone https://github.com/your-username/traffic-tracker.git
    cd traffic-tracker
    ```
+   
+2. Create virtual environment python = 3.9.12
+  ```bash
+  python -m venv venv
+  ```
+  ```bash
+  virtualenv venv
+  ```
+  ```bash
+  conda create -n venv python=3.9.12
+  ```
+activate the environment
+  ```bash
+  source venv/bin/activate
+  ```
+  ```bash
+  ./venv/Script/activate
+  ```
+  ```bash
+  conda activate venv
+  ```
 
 2. Install dependencies:
    ```bash
